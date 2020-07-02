@@ -7,7 +7,7 @@ from shapely.geometry import Point
 from RkNN import VR_BiRkNN, CSD_MonoRkNN, SLICE_BiRkNN, CSD_BiRkNN, VR_MonoRkNN, SLICE_MonoRkNN
 from common.Rtree import RtreeIndex
 from common.VoKDtree import VoKDtreeIndex
-from common.VoRtee import VoRtreeIndex
+from common.VoRtree import VoRtreeIndex
 
 
 def generate_points(n, distribution='Uniform', bounds=None):
