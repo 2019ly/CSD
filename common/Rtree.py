@@ -26,7 +26,7 @@ class RtreeIndex(object):
         self.space = box(minx, miny, maxx, maxy)
         self.geometries = dict()
         self.points = self.geometries
-        self.size=len(data)
+        self.size = len(data)
         for e in data:
             self.insert(e[0], e[1])
 
@@ -128,18 +128,17 @@ class Node(object):
             return True
 
     def insert(self, obj, geom):
-        while True:
-            if self.is_leaf_node:
-                self.geom = bounding_box([self.geom, geom])
-                self.children.append(Node.create_data_node(self.tree, obj, geom))
-                return self.adjust()
-            else:
-                inserting_child = self.find_inserting_child(geom)
-                new_children = inserting_child.insert(obj, geom)
-                if len(new_children) > 1:
-                    self.children.remove(inserting_child)
-                    self.children += new_children
-                return self.adjust()
+        self.geom = bounding_box([self.geom, geom])
+        if self.is_leaf_node:
+            self.children.append(Node.create_data_node(self.tree, obj, geom))
+            return self.adjust()
+        else:
+            inserting_child = self.find_inserting_child(geom)
+            new_children = inserting_child.insert(obj, geom)
+            if len(new_children) > 1:
+                self.children.remove(inserting_child)
+                self.children += new_children
+            return self.adjust()
 
     def find_inserting_child(self, geom):
         min_enlargement = float('inf')
